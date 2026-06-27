@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects · Даша</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=EB+Garamond:wght@400;500&display=swap');
+
+:root {
+  --bg: #f2ede6;
+  --bg2: #ece6dd;
+  --s1: #f8f4ef;
+  --s2: #eee8e0;
+  --b1: #d8d0c4;
+  --b2: #c4b8a8;
+  --t1: #1a1814;
+  --t2: #5a5248;
+  --t3: #9a8e82;
+  --t4: #c4b8a8;
+  --accent: #3a3630;
+  --mist: rgba(26,24,20,0.06);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+body {
+  background: var(--bg);
+  color: var(--t1);
+  font-family: 'EB Garamond', serif;
+  font-size: 15px;
+  min-height: 100vh;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+/* HEADER */
+.hdr {
+  padding: 40px 36px 28px;
+  border-bottom: 1px solid var(--b1);
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 16px;
+}
+.hdr-left { display: flex; flex-direction: column; gap: 4px; }
+.hdr-eyebrow {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--t3);
+  font-weight: 400;
+}
+.hdr-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px; font-weight: 300;
+  color: var(--t1); letter-spacing: .02em;
+  line-height: 1;
+}
+.hdr-title em { font-style: italic; font-weight: 300; }
+.hdr-sub {
+  font-size: 12px; color: var(--t3);
+  letter-spacing: .08em; margin-top: 2px;
+}
+.hdr-right { text-align: right; }
+.overall-pct {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px; font-weight: 300; color: var(--t1); line-height: 1;
+}
+.overall-lbl { font-size: 11px; color: var(--t3); letter-spacing: .1em; text-transform: uppercase; }
+
+/* TABS */
+.tabs { display: flex; gap: 0; padding: 0 36px; border-bottom: 1px solid var(--b1); }
+.tab {
+  padding: 14px 20px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--t3); cursor: pointer;
+  border-bottom: 1px solid transparent; margin-bottom: -1px;
+  transition: .15s;
+}
+.tab:hover { color: var(--t2); }
+.tab.on { color: var(--t1); border-bottom-color: var(--t1); }
+
+/* MAIN */
+.main { padding: 32px 36px; max-width: 1100px; }
+.page { display: none; }
+.page.on { display: block; }
+
+/* PROJECTS GRID */
+.projects { display: flex; flex-direction: column; gap: 24px; }
+
+/* PROJECT CARD */
+.proj-card {
+  background: var(--s1);
+  border: 1px solid var(--b1);
+  border-radius: 2px;
+  overflow: hidden;
+  transition: box-shadow .2s;
+}
+.proj-card:hover { box-shadow: 0 4px 20px rgba(26,24,20,0.08); }
+
+.proj-header {
+  padding: 20px 24px 16px;
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--b1);
+  cursor: pointer;
+}
+.proj-header-left { flex: 1; }
+.proj-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--t4); margin-bottom: 4px;
+}
+.proj-name-wrap { display: flex; align-items: center; gap: 10px; }
+.proj-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 400; font-style: italic;
+  color: var(--t1); flex: 1;
+  background: none; border: none; outline: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color .15s;
+  padding: 2px 0;
+  cursor: text;
+}
+.proj-name:focus { border-bottom-color: var(--b2); }
+.proj-name::placeholder { color: var(--t4); font-style: italic; }
+
+.proj-meta { display: flex; align-items: center; gap: 12px; margin-top: 8px; flex-wrap: wrap; }
+.proj-pct-txt {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px; color: var(--t3); letter-spacing: .05em;
+}
+.proj-done-count { font-size: 12px; color: var(--t4); }
+
+.proj-progress-wrap { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.proj-pct-big {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px; font-weight: 300; color: var(--t1); line-height: 1;
+}
+.progress-bar {
+  width: 100px; height: 2px;
+  background: var(--b1); border-radius: 1px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%; background: var(--t1);
+  border-radius: 1px; transition: width .4s ease;
+}
+
+/* TASKS */
+.proj-tasks {
+  padding: 0 24px 20px;
+  display: none;
+}
+.proj-tasks.open { display: block; }
+
+.task-list { margin-top: 16px; display: flex; flex-direction: column; gap: 2px; }
+
+.task-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--mist);
+}
+.task-row:last-child { border-bottom: none; }
+
+.task-check {
+  width: 16px; height: 16px; flex-shrink: 0;
+  border: 1px solid var(--b2);
+  border-radius: 2px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: .15s;
+  background: transparent;
+}
+.task-check:hover { border-color: var(--t2); }
+.task-check.done { background: var(--t1); border-color: var(--t1); }
+.task-check.done::after { content: '✓'; font-size: 10px; color: var(--s1); }
+
+.task-input {
+  flex: 1;
+  background: none; border: none; outline: none;
+  font-family: 'EB Garamond', serif;
+  font-size: 14px; color: var(--t1);
+  border-bottom: 1px solid transparent;
+  transition: border-color .15s; padding: 1px 0;
+}
+.task-input:focus { border-bottom-color: var(--b1); }
+.task-input::placeholder { color: var(--t4); }
+.task-input.done-txt { color: var(--t3); text-decoration: line-through; }
+
+.task-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px; color: var(--t4); letter-spacing: .05em;
+  flex-shrink: 0; width: 18px; text-align: right;
+}
+
+.proj-toggle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--t3); cursor: pointer; margin-top: 14px;
+  display: inline-block; transition: color .15s;
+}
+.proj-toggle:hover { color: var(--t1); }
+
+/* SUMMARY TAB */
+.summary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-bottom: 32px; }
+
+.sum-card {
+  background: var(--s1); border: 1px solid var(--b1);
+  border-radius: 2px; padding: 20px 22px;
+}
+.sum-lbl {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--t3); margin-bottom: 8px;
+}
+.sum-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px; font-weight: 300; color: var(--t1); line-height: 1;
+  margin-bottom: 4px;
+}
+.sum-val .u { font-size: 14px; color: var(--t3); }
+.sum-sub { font-size: 12px; color: var(--t3); line-height: 1.5; }
+.sum-bar { height: 1px; background: var(--b1); margin-top: 14px; overflow: hidden; }
+.sum-fill { height: 100%; background: var(--t1); transition: width .5s; }
+
+/* PROJ SUMMARY ROWS */
+.proj-summary-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+.psrow {
+  background: var(--s1); border: 1px solid var(--b1);
+  border-radius: 2px; padding: 16px 22px;
+  display: flex; align-items: center; gap: 20px;
+}
+.psrow-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; font-style: italic; color: var(--t1);
+  flex: 1; min-width: 0;
+}
+.psrow-empty { color: var(--t4); font-style: italic; }
+.psrow-stats { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+.psrow-pct {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 300; color: var(--t1);
+}
+.psrow-count { font-size: 11px; color: var(--t3); letter-spacing: .05em; }
+.psrow-bar { width: 80px; height: 1px; background: var(--b1); overflow: hidden; }
+.psrow-fill { height: 100%; background: var(--t1); transition: width .4s; }
+
+/* EXPORT */
+.export-box {
+  background: var(--s1); border: 1px solid var(--b1);
+  border-radius: 2px; padding: 22px;
+}
+.export-lbl {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--t3); margin-bottom: 12px;
+}
+.export-txt {
+  font-family: 'EB Garamond', serif;
+  font-size: 12px; color: var(--t2); line-height: 1.9;
+  white-space: pre-wrap; max-height: 280px; overflow-y: auto;
+}
+.export-btn {
+  margin-top: 14px; padding: 9px 20px;
+  background: var(--t1); color: var(--s1);
+  border: none; border-radius: 1px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px; letter-spacing: .1em; text-transform: uppercase;
+  cursor: pointer; transition: opacity .15s;
+}
+.export-btn:hover { opacity: .8; }
+
+/* DIVIDER */
+.divider {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--t4); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.divider::before,.divider::after { content:''; flex:1; height:1px; background:var(--b1); }
+
+@media(max-width:600px){
+  .hdr{padding:24px 16px 18px;flex-direction:column;align-items:flex-start;}
+  .tabs{padding:0 16px;}
+  .main{padding:20px 16px;}
+  .proj-header{padding:16px 16px 12px;}
+  .proj-tasks{padding:0 16px 16px;}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-left">
+    <div class="hdr-eyebrow">Даша · Трекер проектов</div>
+    <div class="hdr-title"><em>my</em> projects</div>
+    <div class="hdr-sub" id="hdrSub"></div>
+  </div>
+  <div class="hdr-right">
+    <div class="overall-pct" id="overallPct">0%</div>
+    <div class="overall-lbl">общий прогресс</div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab on" onclick="showTab('projects',this)">Проекты</div>
+  <div class="tab" onclick="showTab('summary',this)">Итоги</div>
+</div>
+
+<div class="main">
+
+  <div class="page on" id="page-projects">
+    <div class="projects" id="projectsList"></div>
+  </div>
+
+  <div class="page" id="page-summary">
+    <div class="summary-grid" id="summaryGrid"></div>
+    <div class="divider">по проектам</div>
+    <div class="proj-summary-list" id="projSummaryList"></div>
+    <div class="export-box">
+      <div class="export-lbl">Экспорт · отчёт</div>
+      <div class="export-txt" id="exportTxt"></div>
+      <button class="export-btn" onclick="copyExport()">Скопировать</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const STORAGE_KEY = 'folklore_projects_v1';
+const NUM_PROJECTS = 5;
+const NUM_TASKS = 10;
+
+function load() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultData(); }
+  catch { return defaultData(); }
+}
+function save(d) { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }
+function defaultData() {
+  const projects = [];
+  for (let i = 0; i < NUM_PROJECTS; i++) {
+    projects.push({
+      name: '',
+      tasks: Array(NUM_TASKS).fill(null).map(() => ({ text: '', done: false }))
+    });
+  }
+  return { projects };
+}
+
+let data = load();
+let openProjects = new Set([0]); // first open by default
+
+function showTab(name, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  document.getElementById('page-' + name).classList.add('on');
+  el.classList.add('on');
+  if (name === 'summary') renderSummary();
+}
+
+function getPct(proj) {
+  const done = proj.tasks.filter(t => t.done).length;
+  const total = proj.tasks.filter(t => t.text.trim()).length;
+  if (!total) return 0;
+  return Math.round(done / total * 100);
+}
+function getDone(proj) { return proj.tasks.filter(t => t.done).length; }
+function getTotal(proj) { return proj.tasks.filter(t => t.text.trim()).length; }
+
+function getOverall() {
+  let done = 0, total = 0;
+  data.projects.forEach(p => { done += getDone(p); total += getTotal(p); });
+  return total ? Math.round(done / total * 100) : 0;
+}
+
+function render() {
+  const overall = getOverall();
+  document.getElementById('overallPct').textContent = overall + '%';
+  const totalTasks = data.projects.reduce((s,p) => s + getTotal(p), 0);
+  const doneTasks = data.projects.reduce((s,p) => s + getDone(p), 0);
+  document.getElementById('hdrSub').textContent =
+    totalTasks ? `${doneTasks} из ${totalTasks} задач выполнено` : 'добавь проекты и задачи';
+
+  const list = document.getElementById('projectsList');
+  list.innerHTML = '';
+
+  data.projects.forEach((proj, pi) => {
+    const pct = getPct(proj);
+    const done = getDone(proj);
+    const total = getTotal(proj);
+    const isOpen = openProjects.has(pi);
+
+    const card = document.createElement('div');
+    card.className = 'proj-card';
+    card.innerHTML = `
+      <div class="proj-header" onclick="toggleProj(${pi})">
+        <div class="proj-header-left">
+          <div class="proj-num">Project ${String(pi+1).padStart(2,'0')}</div>
+          <div class="proj-name-wrap">
+            <input class="proj-name" id="pname_${pi}"
+              value="${escHtml(proj.name)}"
+              placeholder="название проекта…"
+              onclick="event.stopPropagation()"
+              onchange="updateName(${pi},this.value)"
+              onblur="updateName(${pi},this.value)">
+          </div>
+          <div class="proj-meta">
+            <span class="proj-pct-txt">${pct}% выполнено</span>
+            <span class="proj-done-count">${done}/${total || NUM_TASKS} задач</span>
+          </div>
+        </div>
+        <div class="proj-progress-wrap">
+          <div class="proj-pct-big">${pct}%</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+        </div>
+      </div>
+      <div class="proj-tasks ${isOpen ? 'open' : ''}">
+        <div class="task-list" id="tasks_${pi}"></div>
+        <div class="proj-toggle" onclick="toggleProj(${pi})">свернуть ↑</div>
+      </div>
+    `;
+    list.appendChild(card);
+
+    const taskList = card.querySelector(`#tasks_${pi}`);
+    proj.tasks.forEach((task, ti) => {
+      const row = document.createElement('div');
+      row.className = 'task-row';
+      row.innerHTML = `
+        <span class="task-num">${ti+1}</span>
+        <div class="task-check ${task.done ? 'done' : ''}" onclick="toggleTask(${pi},${ti})"></div>
+        <input class="task-input ${task.done ? 'done-txt' : ''}"
+          value="${escHtml(task.text)}"
+          placeholder="задача ${ti+1}…"
+          onchange="updateTask(${pi},${ti},this.value)"
+          onblur="updateTask(${pi},${ti},this.value)">
+      `;
+      taskList.appendChild(row);
+    });
+  });
+}
+
+function escHtml(s) { return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+
+function toggleProj(pi) {
+  if (openProjects.has(pi)) openProjects.delete(pi);
+  else openProjects.add(pi);
+  render();
+}
+function updateName(pi, val) {
+  data.projects[pi].name = val.trim();
+  save(data);
+  updateHeader();
+}
+function updateTask(pi, ti, val) {
+  data.projects[pi].tasks[ti].text = val.trim();
+  save(data);
+  updateHeader();
+}
+function toggleTask(pi, ti) {
+  if (!data.projects[pi].tasks[ti].text.trim()) return;
+  data.projects[pi].tasks[ti].done = !data.projects[pi].tasks[ti].done;
+  save(data);
+  render();
+}
+function updateHeader() {
+  const overall = getOverall();
+  document.getElementById('overallPct').textContent = overall + '%';
+  const totalTasks = data.projects.reduce((s,p) => s + getTotal(p), 0);
+  const doneTasks = data.projects.reduce((s,p) => s + getDone(p), 0);
+  document.getElementById('hdrSub').textContent =
+    totalTasks ? `${doneTasks} из ${totalTasks} задач выполнено` : 'добавь проекты и задачи';
+}
+
+function renderSummary() {
+  const overall = getOverall();
+  const totalTasks = data.projects.reduce((s,p) => s + getTotal(p), 0);
+  const doneTasks = data.projects.reduce((s,p) => s + getDone(p), 0);
+  const activeProjects = data.projects.filter(p => p.name.trim()).length;
+  const completedProjects = data.projects.filter(p => getPct(p) === 100 && getTotal(p) > 0).length;
+
+  const cards = [
+    {l:'Общий прогресс', v:overall+'%', u:'', s:`${doneTasks} из ${totalTasks} задач`, pct:overall},
+    {l:'Активных проектов', v:activeProjects, u:'', s:`из ${NUM_PROJECTS} слотов`, pct:activeProjects/NUM_PROJECTS*100},
+    {l:'Завершённых', v:completedProjects, u:'', s:'проектов 100%', pct:completedProjects/NUM_PROJECTS*100},
+    {l:'Выполнено задач', v:doneTasks, u:'', s:`из ${totalTasks} добавленных`, pct:totalTasks?doneTasks/totalTasks*100:0},
+  ];
+
+  document.getElementById('summaryGrid').innerHTML = cards.map(c => `
+    <div class="sum-card">
+      <div class="sum-lbl">${c.l}</div>
+      <div class="sum-val">${c.v}<span class="u"> ${c.u}</span></div>
+      <div class="sum-sub">${c.s}</div>
+      <div class="sum-bar"><div class="sum-fill" style="width:${Math.min(100,Math.max(0,c.pct||0))}%"></div></div>
+    </div>`).join('');
+
+  document.getElementById('projSummaryList').innerHTML = data.projects.map((p, i) => {
+    const pct = getPct(p);
+    const done = getDone(p);
+    const total = getTotal(p);
+    return `<div class="psrow">
+      <div class="psrow-name ${p.name?'':'psrow-empty'}">${p.name || `Проект ${i+1}`}</div>
+      <div class="psrow-stats">
+        <div class="psrow-pct">${pct}%</div>
+        <div class="psrow-count">${done} / ${total} задач</div>
+        <div class="psrow-bar"><div class="psrow-fill" style="width:${pct}%"></div></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  let exportLines = `=== ОТЧЁТ ПО ПРОЕКТАМ · ДАША ===\nОбщий прогресс: ${overall}%\nВыполнено задач: ${doneTasks} из ${totalTasks}\n\n`;
+  data.projects.forEach((p, i) => {
+    const name = p.name || `Проект ${i+1}`;
+    const pct = getPct(p);
+    const done = getDone(p);
+    const total = getTotal(p);
+    exportLines += `— ${name.toUpperCase()} (${pct}%, ${done}/${total})\n`;
+    p.tasks.forEach((t, ti) => {
+      if (t.text) exportLines += `  ${t.done ? '✓' : '○'} ${t.text}\n`;
+    });
+    exportLines += '\n';
+  });
+  exportLines += `---\nЗапрос: Проанализируй мой прогресс по проектам. Что выполнено хорошо, что требует внимания? Дай рекомендации по приоритетам.`;
+  document.getElementById('exportTxt').textContent = exportLines;
+}
+
+function copyExport() {
+  navigator.clipboard.writeText(document.getElementById('exportTxt').textContent).then(() => {
+    const b = document.querySelector('.export-btn');
+    const orig = b.textContent;
+    b.textContent = 'Скопировано ✓';
+    setTimeout(() => b.textContent = orig, 2000);
+  });
+}
+
+render();
+</script>
+</body>
+</html>
